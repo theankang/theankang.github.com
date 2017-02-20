@@ -10,7 +10,8 @@ url: "http://theankang.com/"
 baseurl: "/theankang.github.com"
 header-img: img/home-bg.jpg
 headercolor: "#FFFFFF"
-logo: /theankang.github.com/img/logos/Project-Pages-New-Logo-Inverted.png
+logo: /theankang.github.com/img/logos/HYUNA.jpg
+# logo: /theankang.github.com/img/logos/Project-Pages-New-Logo-Inverted.png
 
 # Tertiary Parameters
 github_username:  theankang
