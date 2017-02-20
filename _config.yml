@@ -13,9 +13,9 @@ headercolor: "#FFFFFF"
 logo: /theankang.github.com/img/logos/Project-Pages-New-Logo-Inverted.png
 
 # Tertiary Parameters
-github_username:  projectpages
-project_repository: project-pages
-disqus_shortname: project-pages
+github_username:  theankang
+project_repository: theankang.github.com
+disqus_shortname: theankang.github.com
 g-analytics: UA-75881392-1
 altmetric: true
 
