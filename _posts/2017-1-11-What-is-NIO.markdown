@@ -69,3 +69,6 @@ category:
       - 同步I/O
   - Proactor 
       - 异步I/O
+
+http://tutorials.jenkov.com/java-nio/index.html
+最后先扔一个链接, 有时间细细看一下(先把这个坑挖到这里, 不过估计是填不上了...).
