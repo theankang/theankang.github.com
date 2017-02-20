@@ -1,0 +1,261 @@
+---
+layout:     post
+title:      排序算法集合
+author:     theankang
+tags: 		算法 排序
+subtitle:  	
+category:  
+---
+## 2017-1-12 10:40:13
+
+### 直接插入排序
+
+``` Java
+public class InsertSorting {
+
+    public InsertSorting() {
+        int[] a = {49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 4, 62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 51};
+        int temp;
+        for(int i = 1; i < a.length; ++i) {
+            temp = a[i];
+            int j = i - 1;
+            for(; j >= 0 && a[j] > temp; --j) {
+                a[j + 1] = a[j];
+            }
+            ++j;
+            a[j] = temp;
+        }
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + ", ");
+        }
+    }
+}
+```
+
+- 基本思想：
+  在要排序的一组数中，假设前面(n-1)[n>=2] 个数已经是排
+好顺序的，现在要把第n个数插到前面的有序数中，使得这n个数
+也是排好顺序的。
+
+### 希尔排序（最小增量排序）
+
+To be finished
+
+### 简单选择排序
+
+- 基本思想：
+  - 在要排序的一组数中，选出最小的一个数与第一个位置的数交换
+  - 然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止
+
+``` Java
+public class SelectSorting {
+
+    public SelectSorting() {
+
+        int a[] = {1, 54, 6, 3, 78, 34, 12, 45};
+        int tempPosition;
+
+        for (int i = 0; i < a.length; ++i) {
+
+            tempPosition = i;
+            int temp = a[i];
+            int j = i + 1;
+
+            for (; j < a.length; ++j) {
+                if(a[j] < temp) {
+                    temp = a[j];
+                    tempPosition = j;
+                }
+            }
+
+            a[tempPosition] = a[i];
+            a[i] = temp;
+        }
+
+        for (int i = 0; i < a.length; i++)
+            System.out.print(a[i] + ", ");
+        System.out.println();
+    }
+}
+```
+
+### 堆排序
+
+- 树     只要无环无向联通图都叫树
+- 堆     二叉堆 简称堆 父节点比两个子节点大（小）
+  - 堆是一种特殊的完全二叉树
+- 二叉树 左节点比父节点小，右节点比父节点大
+
+堆排序就是先建立一个最小堆，然后开始堆的删除操作（堆的删除只可以删除堆顶的节点），将堆顶和最后一个节点交换，删除最后一个节点（原堆顶），再构造最小堆。直到堆中无元素，此时取出的元素序列就是已经完成的排序。
+
+``` Java
+public class HeapSorting {
+    int a[] = {4, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 49, 62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 51};
+
+    public HeapSorting() {
+        heapSort(a);
+    }
+
+    public void heapSort(int[] a) {
+        System.out.println("开始排序");
+        int arrayLength = a.length;
+        //循环建堆
+        for (int i = 0; i < arrayLength - 1; i++) {
+            //建堆
+            buildMaxHeap(a, arrayLength - 1 - i);                    
+            //交换堆顶和最后一个元素
+            swap(a, 0, arrayLength - 1 - i);
+            System.out.println(Arrays.toString(a));
+        }
+    }
+
+
+    private void swap(int[] data, int i, int j) {
+
+        int tmp = data[i];
+        data[i] = data[j];
+        data[j] = tmp;
+    }
+
+    //对data数组从0到lastIndex建大顶堆
+    private void buildMaxHeap(int[] data, int lastIndex) {
+
+        //从lastIndex处节点（最后一个节点）的父节点开始
+
+        for (int i = (lastIndex - 1) / 2; i >= 0; i--) {
+            //k保存正在判断的节点
+            int k = i;
+            //如果当前k节点的子节点存在
+            while (k * 2 + 1 <= lastIndex) {
+                //k节点的左子节点的索引
+                int biggerIndex = 2 * k + 1;
+                //如果biggerIndex小于lastIndex，即biggerIndex+1代表的k节点的右子节点存在
+                if (biggerIndex < lastIndex) {
+                    //若果右子节点的值较大
+                    if (data[biggerIndex] < data[biggerIndex + 1]) {
+                        //biggerIndex总是记录较大子节点的索引
+                        biggerIndex++;
+                    }
+                }
+
+                //如果k节点的值小于其较大的子节点的值
+                if (data[k] < data[biggerIndex]) {
+                    //交换他们
+                    swap(data, k, biggerIndex);
+                    //将biggerIndex赋予k，开始while循环的下一次循环，重新保证k节点的值大于其左右子节点的值
+                    k = biggerIndex;
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+}
+``` 
+
+### 冒泡排序
+
+···
+
+### 快速排序
+
+基本思想：选择一个基准元素,通常选择第一个元素或者最后一个元素,通过一趟扫描，将待排序列分成两部分,一部分比基准元素小,一部分大于等于基准元素,此时基准元素在其排好序后的正确位置,然后再用同样的方法递归地排序划分的两部分。
+
+快速排序的一趟
+![快速排序的一趟](http://img.my.csdn.net/uploads/201209/07/1347009479_6587.jpg) 
+
+``` Java
+public class QuickSorting {
+
+    int a[]= {
+        49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 4,
+        62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 51
+    };
+
+    public QuickSorting() {
+        quick(a);
+        for (int i = 0; i < a.length; i++) {
+            System.out.print(a[i] + ", ");
+        }
+        System.out.println();
+    }
+
+    public void quick(int[] a2) {
+        if (a2.length > 0) {    //查看数组是否为空
+            quickSort(a2, 0, a2.length - 1);
+        }
+    }
+
+    public int getMiddle(int[] list, int low, int high) {
+
+        int temp = list[low];    //数组的第一个作为中轴
+
+        for(; low < high; ) {
+
+            for(; low < high && list[high] >= temp; high --) {
+
+            }
+            list[low] = list[high];
+
+            for(; low < high && list[low] <= temp; low ++) {
+
+            }
+            list[high] = list[low];
+
+        }
+        list[low] = temp;
+        return low;
+
+//        while (low < high) {
+//            while (low < high && list[high] >= tmp) {
+//                high--;
+//            }
+//
+//            list[low] = list[high];   //比中轴小的记录移到低端
+//            while (low < high && list[low] <= tmp) {
+//                low++;
+//            }
+//
+//            list[high] = list[low];   //比中轴大的记录移到高端
+//        }
+//        list[low] = tmp;              //中轴记录到尾
+//        return low;                   //返回中轴的位置
+    }
+
+    public void quickSort(int[] list, int low, int high) {
+        if (low < high) {
+            int middle = getMiddle(list, low, high);  //将list数组进行一分为二
+            quickSort(list, low, middle - 1);       //对低字表进行递归排序
+            quickSort(list, middle + 1, high);       //对高字表进行递归排序
+        }
+    }
+}
+```
+
+### 归并排序
+
+![归并排序](http://img.my.csdn.net/uploads/201209/07/1347009541_6721.jpg)
+
+
+
+### 基数排序
+
+![基数排序](http://img.my.csdn.net/uploads/201209/07/1347009583_9101.jpg)
+
+
+---
+
+## 2017-1-13 09:38:13
+
+### 排序的分类：
+>  1. 插入排序（直接插入排序、希尔排序）
+>  2. 交换排序（冒泡排序、快速排序）
+>  3. 选择排序（直接选择排序、堆排序）
+>  4. 归并排序
+>  5. 分配排序（基数排序）
+
+  所需辅助空间最多：归并排序
+  所需辅助空间最少：堆排序
+  平均速度最快：快速排序
+
+  不稳定：快速排序，希尔排序，堆排序。
