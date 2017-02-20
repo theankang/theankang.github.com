@@ -12,7 +12,7 @@ category:
   
 > 首先来概览一下我们要完成的最终效果是什么，我之前有一个开源库，地址在 https://github.com/icodeu/CommonAdapter，打开             JitPack.io 的网站，将我的开源库地址粘贴进去，Look up->Get it，即可看到熟悉的 compile 了，按照下面那个提示复制到相应的           build.gradle 文件中就可以完成 library 的依赖了，不信你试试啊。
 
-![1] (http://upload-images.jianshu.io/upload_images/616905-522f522d239f8ae2.png? imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![1](http://upload-images.jianshu.io/upload_images/616905-522f522d239f8ae2.png? imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### 在这里做一个简要的备忘
 然后丢一个[链接](http://www.jianshu.com/p/e443456bb506)(逃
