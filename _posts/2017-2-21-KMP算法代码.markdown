@@ -1,0 +1,50 @@
+---
+layout:     post
+title:      KMP算法代码
+author:     theankang
+tags: 		KMP 算法
+subtitle:  	
+category:  
+---
+循环得到next数组, 这张图非常重要
+![循环得到next数组](http://img.blog.csdn.net/20150812214857858)
+
+- 图中上面的k表示的是已经匹配成功的字符串的长度
+- 下面的P_k表示开头匹配串的尾节点, P_j表示当前匹配的字符, 两者相对应
+
+1. 当P_k == P_j时, 一切好说, 就把next数组的上一个值+1放到当前就行, 表示原来已经匹配的那么长的串又多了一个字符(但是这个字符并非当前我们匹配的字符, 而是他的前一个, 因为next数组的求解总是在当前字符处存放前面的串有几个匹配的字符)
+
+2. 当P_k != P_j时, 就把P_j和P_k所存放的表示他自己(P_k)前面的已匹配字符串的开头匹配串的后一个字符相比较, 如果相同就把k+1放到next[j+1]里面. 其中k+1表示的是开头匹配串中与P_j相同节点的序号(从1开始).当然如果不相同的话, 就和前面匹配不成功的情况一样了, 即把next[k] = k, 再作比较, 直到P_0. 
+- 为什么放到next[j+1]中呢? 
+  - 因为下一个节点才存放当前的串的匹配结果.
+- 再加一句, 我觉得这就是想清楚了前面的串就是ABA型的有穷嵌套, 每一个A之中又是一个ABA, 所以才能通过循环解决, 又有点像递归.
+
+![循环得到next数组](http://img.blog.csdn.net/20140809163257703)
+
+``` Java
+public void GetNext(String str, int next[]) {  
+    
+    int length = str.length;
+    next[0] = -1;  
+    int k = -1;  
+    int j = 0;  
+    while (j < length - 1) {  
+        /*
+         * 这里的判断非常巧妙, 不仅解决了第一个节点, 
+         * 同时也解决了后面节点循环判断到第一个节点的问题
+         */ 
+        if (k == -1 || p[j] == p[k]) {  //p[k]表示前缀，p[j]表示后缀 
+            ++k;  
+            ++j;  
+            next[j] = k;  
+        }  else {  
+            k = next[k];  
+        }  
+    }  
+}  
+```
+这篇博客看第二遍了, 写的不错, 看的也恶心
+http://blog.csdn.net/v_july_v/article/details/7041827
+PS. KMP is a piece of shittttttttttttt.
+
+还有next数组的优化... 先把坑挖下来
