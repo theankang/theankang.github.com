@@ -1,0 +1,145 @@
+---
+layout:     post
+title:      手写单例模式
+author:     theankang
+tags: 		设计模式 单例模式
+subtitle:  	
+category:  
+---
+## 2017-2-2 01:00:37
+
+### 单例模式
+
+static(静态的)
+- 表示全局变量, 直接通过类来调用变量, 方法.
+- JVM分配在内存堆上, 所有的引用都指向这片内存, 而不会分配新的内存
+
+final
+- 不可修改的常量, final修饰的方法也不可以重写
+
+#### 饿汉式
+
+``` Java
+public class Singleton {
+
+    private static Singleton instance = new Singleton();
+
+    private Singleton() {
+        System.out.println("Hello World");
+    }
+
+    /*
+     * 通过public的getInstance来访问实例
+     */
+    public Singleton getInstance() {
+        return instance;
+    }
+
+}
+```
+
+#### 懒汉式(延迟加载)
+
+``` Java
+public class Singleton {
+
+    private static Singleton instance;
+
+    private Singleton() {
+        System.out.println("Hello World");
+    }
+
+    /*
+     * 延迟到已经要访问的时候再获取
+     * 如果 == null 就实例化一个
+     * 但是只能用于单线程的环境中
+     */
+    public static Singleton getInstance() {
+        
+        if(instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+#### 改进的同步版懒汉式
+
+``` Java
+public class Singleton {
+
+    private static Singleton instance;
+
+    private Singleton() {
+        System.out.println("Hello World");
+    }
+
+    /*
+     * 加入synchronized就是加个锁
+     * 当一个线程访问的时候,别的线程不能访问
+     */
+    public static synchronized Singleton getInstance() {
+        
+        if(instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+#### DCL单例模式(Double Check Lock: 双重检查加锁)
+
+``` Java
+public class Singleton {
+
+    /*
+     * 由于instance = new Singleton();并非原子操作, 指令的乱序执行
+     * 导致DCL存在缺陷, 解决办法就是把下一句添加一个volatile
+     * private volatile static Singleton instance;
+     */
+    private static Singleton instance;
+
+    private Singleton() {
+        System.out.println("Hello World");
+    }
+
+    /*
+     * 第一层判断主要是为了避免不必要的同步
+     * 第二层的判断则是为了在null的情况下创建实例
+     */
+    public static Singleton getInstance() {
+        
+        if(instance == null) {
+            synchronized(Singleton.class){  
+                if(instance == null){  
+                    instance = new Singleton();    
+                }  
+            }  
+        }
+        return instance;
+    }
+}
+```
+
+#### static内部类单例模式
+``` Java
+class Single   
+{  
+    private Single()(  
+        System.out.println("Hello World");  
+    )  
+      
+    /*
+     * 内部类
+     */
+    private static class InstanceHolder{  
+        private static final Single instance = new Single();  
+    }  
+  
+    public static Single getInstance(){  
+        return InstanceHolder.instance;  
+    }  
+}  
+```
