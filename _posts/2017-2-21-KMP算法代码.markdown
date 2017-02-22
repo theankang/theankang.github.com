@@ -44,7 +44,59 @@ public void GetNext(String str, int next[]) {
 }  
 ```
 这篇博客看第二遍了, 写的不错, 看的也恶心
+
 http://blog.csdn.net/v_july_v/article/details/7041827
+
 PS. KMP is a piece of shittttttttttttt.
 
 还有next数组的优化... 先把坑挖下来
+
+``` Java
+public void GetNext(String str, int next[]) {  
+    
+    int length = str.length;
+    next[0] = -1;  
+    int k = -1;  
+    int j = 0;  
+    while (j < length - 1) {
+        
+        if (k == -1 || p[j] == p[k]) {  //p[k]表示前缀，p[j]表示后缀 
+          
+            ++k;  
+            ++j;  
+        }
+
+        if(p[j] != p[k]) {
+            next[j] = k;
+            break;
+        } else {
+            k= next[k];
+        }
+
+    }  
+} 
+
+public int KmpSearch(String source, String pattern) {  
+    
+    int i = 0;  
+    int j = 0; 
+    int sLen = source.length;
+    int pLen = pattern.length;
+    while (i < sLen && j < pLen) {  
+        //如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++      
+        if (j == -1 || s[i] == p[j]) {  
+            i++;  
+            j++;  
+        }  
+        else {  
+            //②如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]      
+            //next[j]即为j所对应的next值        
+            j = next[j];  
+        }  
+    }  
+    if (j == pLen)  
+        return i - j;  
+    else  
+        return -1;  
+}  
+```
