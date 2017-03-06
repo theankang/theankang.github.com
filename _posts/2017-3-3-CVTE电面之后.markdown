@@ -1,0 +1,43 @@
+---
+layout:     post
+title:      CVTE电面之后
+author:     theankang
+tags:       面经
+subtitle:  	
+category:  
+---
+#### 算法题
+先说最后一个手写算法题, 给予一个N, 输出1 ~ N中素数的和. 现在之后总结一下. 
+
+首先, 要处理边界值, 比如N == 1;
+
+然后, 说一种比较高效的算法, 就是开一个N大小的数组, 把1 ~ N的数都放进去, 然后每个都设置成为true;
+      然后就开始扫描, 遇到2就把2的倍数全设置成false, 遇到3就把3的倍数设置成false, 然后就往下遍历, 遇到true
+      就把true相应的数字的倍数设置成false, 一直遍历到根号N, 此时数组中true对应的数字就是素数.
+``` Java
+for (i = 3; i <= sqrt(n); i += 2) {
+    if(prime[i]) {
+          for (j = i + i; j <= n; j += i) 
+              prime[j]=false;
+    }
+}
+```
+
+最后把素数相加.
+
+#### MySQL索引底层实现
+- B- Tree, B+ Tree
+- 哈希
+- 全文索引等待
+
+#### ArrayList和LinkedList底层
+ArrayList是Object数组
+
+LinkedList底层的数据结构是链表
+
+最重要的问题就是ArrayList和LinkedList插入数据的时候哪个快?
+  首先, 使用get方法访问列表中的任意一个元素时(random-access)，ArrayList的速度要比LinkedList快, 因为后者只能从头开始遍历.
+  插入数据的话, 就分两种情况:
+  - 顺序插入
+  - 随机插入, 这种情况LinkedList快
+
