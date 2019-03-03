@@ -1,13 +1,13 @@
 # Site settings
 title: Theankang
 description: "A Blog From Theankang"
-url: "http://theankang.com/"
+url: "http://theankang.github.com/"
 
 
 
 
 # Secondary Parameters
-baseurl: "/theankang.github.com"
+baseurl: "/"
 header-img: img/home-bg.jpg
 headercolor: "#FFFFFF"
 logo: /theankang.github.com/img/logos/HYUNA.jpg
